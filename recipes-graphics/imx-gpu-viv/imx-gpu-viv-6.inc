@@ -238,7 +238,7 @@ do_install () {
     fi
     if [ "${BACKEND}" = "wayland" ] && [ "${IS_MX8}" != "1" ]; then
         # Special case for libVDK on Wayland backend, deliver fb library as well.
-        cp ${S}/gpu-core/usr/lib/fb/libVDK.so.1.2.0 ${D}${libdir}/libVDK-fb.so.1.2.0
+        cp ${S}/gpu-core/usr/lib/fb/libVDK.so.1.2.0 ${D}${libdir}/libVDK-fb.so.1.2.0 || true
     fi
 
     if [ -z "${PACKAGES_OPENCL}" ]; then
@@ -413,4 +413,6 @@ FILES:libnn-imx = "${libdir}/libNN*${SOLIBS}"
 # It will use gcompat at runtime therefore checking for these at compile time wont be useful as
 # they dont match musl/gcompat but it should run fine
 INSANE_SKIP:append:libc-musl = " file-rdeps"
+
+RDEPENDS:libegl-imx += "libdrm"
 
